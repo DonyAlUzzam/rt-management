@@ -10,6 +10,8 @@ class Payment extends Model
     use HasFactory;
 
     protected $fillable = [
+        'receipt_number',
+        'resident_payment',
         'payment_date',
         'total_amount',
         'notes'
@@ -23,5 +25,13 @@ class Payment extends Model
     public function details()
     {
         return $this->hasMany(PaymentDetail::class);
+    }
+
+    public function resident()
+    {
+        return $this->belongsTo(
+            Resident::class,
+            'resident_payment'
+        );
     }
 }

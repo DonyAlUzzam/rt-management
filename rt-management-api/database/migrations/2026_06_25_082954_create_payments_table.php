@@ -15,6 +15,9 @@ return new class extends Migration
 
             $table->id();
 
+            $table->string('receipt_number')
+            ->unique();
+
             $table->date('payment_date');
 
             $table->decimal('total_amount', 15, 2);

@@ -10,15 +10,39 @@ use App\Http\Requests\StoreHouseRequest;
 use App\Http\Requests\UpdateHouseRequest;
 
 use App\Http\Resources\HouseResource;
+use Illuminate\Http\Request;
 
 class HouseController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = House::query()
+            ->with('currentResident.resident');
+
+        if ($request->filled('search')) {
+
+            $query->where(
+
+                'house_number',
+
+                'like',
+
+                '%' . $request->search . '%'
+
+            );
+
+        }
+
+
+        if ($request->filled('status')) {
+            $query->where(
+                'status',
+                $request->status
+            );
+        }
+
         return HouseResource::collection(
-            House::with(
-                'currentResident.resident'
-            )->get()
+            $query->paginate()
         );
     }
 
@@ -67,27 +91,6 @@ class HouseController extends Controller
         return response()->json([
             'message' => 'House deleted'
         ]);
-    }
-
-    public function vacant()
-    {
-        $houses = House::where('status', 'vacant')
-            ->orderBy('house_number')
-            ->get();
-
-        return HouseResource::collection($houses);
-    }
-
-    public function occupied()
-    {
-        $houses = House::with([
-                'currentResident.resident'
-            ])
-            ->where('status', 'occupied')
-            ->orderBy('house_number')
-            ->get();
-
-        return HouseResource::collection($houses);
     }
 
     public function statistics()

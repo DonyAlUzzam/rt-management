@@ -38,4 +38,12 @@ class Resident extends Model
         return $this->hasOne(HouseOccupancy::class)
             ->where('is_active', true);
     }
+
+    public function payments()
+    {
+        return $this->hasMany(
+            Payment::class,
+            'resident_payment'
+        );
+    }
 }

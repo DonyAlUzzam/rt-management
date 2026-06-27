@@ -8,16 +8,69 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\StoreResidentRequest;
 use App\Http\Requests\UpdateResidentRequest;
-
+use Illuminate\Http\Request;
 use App\Http\Resources\ResidentResource;
 
 class ResidentController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $residents = Resident::latest()->paginate(10);
 
-        return ResidentResource::collection($residents);
+        $query = Resident::query();
+
+        if ($request->filled('search')) {
+
+            $query->where(
+
+                'full_name',
+
+                'like',
+
+                '%' . $request->search . '%'
+
+            );
+
+        }
+
+        $residents =
+
+            $query
+
+            ->latest()
+
+            ->paginate(10);
+
+        return ResidentResource::collection(
+
+            $residents
+
+        );
+
+    }
+
+    public function availableResident(Request $request)
+    {
+        $query = Resident::query()
+            ->whereDoesntHave('occupancies', function ($query) {
+                $query->where('is_active', true);
+            });
+
+        $residents =
+
+            $query
+
+            ->latest()
+            ->paginate(10);
+
+        // return response()->json([
+        //     'data' => $query
+        // ]);
+
+        return ResidentResource::collection(
+
+            $residents
+
+        );
     }
 
     public function store(StoreResidentRequest $request)
