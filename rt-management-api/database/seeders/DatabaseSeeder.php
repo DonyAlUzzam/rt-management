@@ -20,7 +20,11 @@ class DatabaseSeeder extends Seeder
             HouseSeeder::class,
             ResidentSeeder::class,
             OccupancySeeder::class,
-            BillTypeSeeder::class
+            BillTypeSeeder::class,
+            BillSeeder::class,
+            PaymentSeeder::class,
+            ExpenseCategorySeeder::class,
+            ExpenseSeeder::class,
         ]);
     }
 }
