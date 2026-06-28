@@ -20,7 +20,7 @@ export default function Router() {
 
             <Routes>
 
-                <Route path="/" element={<Login />} />
+                <Route path="/" element={<Dashboard />} />
 
                 {/* <Route
 
