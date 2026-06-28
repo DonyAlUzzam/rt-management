@@ -2,23 +2,53 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\House;
+use Illuminate\Database\Seeder;
 
 class HouseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
+        // House::truncate();
+
+        $houses = [];
+
         for ($i = 1; $i <= 20; $i++) {
 
-            House::create([
-                'house_number' => 'A-' . str_pad($i, 2, '0', STR_PAD_LEFT),
-                'status' => 'vacant'
-            ]);
+            $houseNumber = sprintf(
+                'A-%02d',
+                $i
+            );
+            $address = sprintf(
+                'Jalan-%02d',
+                $i
+            );
+
+            if ($i <= 18) {
+
+                $status = 'occupied';
+
+            } else {
+
+                $status = 'vacant';
+
+            }
+
+            $houses[] = [
+
+                'house_number' => $houseNumber,
+
+                'address' => $address,
+
+                'status' => $status,
+
+                'created_at' => now(),
+
+                'updated_at' => now(),
+
+            ];
         }
+
+        House::insert($houses);
     }
 }
