@@ -1,3 +1,32 @@
+# 🚀 Quick Start
+
+```bash
+git clone https://github.com/DonyAlUzzam/rt-management.git
+
+cd rt-management/rt-management-api
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate:fresh --seed
+php artisan serve
+```
+
+Buka terminal baru.
+
+```bash
+cd rt-management/rt-management-frontend
+npm install
+cp .env.example .env
+npm run dev
+```
+
+Akses aplikasi:
+
+Frontend : http://localhost:5173
+
+Backend : http://localhost:8000
+
+
 # 🏘️ RT Management System
 
 RT Management System adalah aplikasi berbasis web yang digunakan untuk membantu pengelolaan administrasi lingkungan RT, mulai dari data rumah, penghuni, tagihan, pembayaran, pengeluaran hingga laporan keuangan bulanan.
@@ -85,7 +114,7 @@ https://github.com/DonyAlUzzam/rt-management
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/USERNAME/rt-management.git
+git clone https://github.com/DonyAlUzzam/rt-management.git
 ```
 
 Masuk ke folder project.
